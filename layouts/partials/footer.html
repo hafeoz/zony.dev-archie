@@ -12,7 +12,6 @@
 </footer>
 
 {{- if (isset .Site.Params "social") -}}
-<script>
-  feather.replace()
-</script>
+{{ $js := resources.Get "js/feather-replace.js" | resources.Minify | fingerprint "sha512" }}
+<script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 {{- end -}}

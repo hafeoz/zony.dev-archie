@@ -10,18 +10,18 @@
 		<div class="draft-label heti">
 			<strong>这是一个预发布的文章。</strong>
 			文章的内容并没有经过仔细地考量和阅读。如果有任何修改意见，请<a href="/about">联系我</a>。
-		</div>{{ end }}
+		</div><br/>{{ end }}
 		{{ if isset .Params "tldr" }}
 		<div class="tldr heti">
 			<strong>简而言之:</strong>
 			{{ .Params.tldr }}
-		</div>{{ end }}
+		</div><br/>{{ end }}
 
 		{{ if isset .Params "toc" }}
 		<div class="toc">
 		<strong>目录:</strong>
 		{{ .TableOfContents }}
-		</div>{{ end }}
+		</div><br/>{{ end }}
 
 		<section class="body heti">
 			{{ .Content }}

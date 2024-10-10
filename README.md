@@ -18,7 +18,6 @@ Forked from [Ezhil Theme](https://github.com/vividvilla/ezhil)
 - tl:dr; frontamatter
 - Table of contents
 - Cache busting for CSS files
-- Disqus Comments
 
 ## Installation
 In your Hugo website directory, create a new folder named theme and clone the repo

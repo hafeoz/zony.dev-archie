@@ -22,73 +22,45 @@
 
 	{{- template "_internal/opengraph.html" . -}}
 	{{- template "_internal/twitter_cards.html" . -}}
-	{{ if and (isset .Site.Params "social") (.Site.Params.useCDN | default false) -}}
-		<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	{{- else if or (isset .Site.Params "social") (eq .Site.Params.mode "toggle") -}}
-		<script src="{{ absURL "js/feather.min.js" }}"></script>
+	{{ if or (isset .Site.Params "social") (eq .Site.Params.mode "toggle") -}}
+		{{ $js := resources.Get "js/feather.js" | resources.Minify | fingerprint "sha512" }}
+		<script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 	{{ end }}
 
-	{{ $style := resources.Get "css/main.css" | fingerprint }}
-	<link rel="stylesheet" type="text/css" media="screen" href="{{ $style.Permalink }}" />
+	{{ $style := resources.Get "css/main.css" | resources.Minify | fingerprint }}
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}" />
 
 	{{- if or (eq .Site.Params.mode "auto") (eq .Site.Params.mode "dark") (eq .Site.Params.mode "toggle") -}}
-		{{ $darkstyle := resources.Get "css/dark.css" | fingerprint }}
-		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="{{ $darkstyle.Permalink }}" {{ if eq .Site.Params.mode "auto" }}media="(prefers-color-scheme: dark)"{{ end }} {{ if eq .Site.Params.mode "toggle" }}disabled{{ end }} />
-	{{ end }}
-
-	<!-- Mathjax support -->
-	{{ with .Site.Params.mathjax }}
-		<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-		</script>
-
-		<!-- inline Mathjax -->
-		<script type="text/x-mathjax-config">
-		MathJax.Hub.Config({
-			tex2jax: {
-				inlineMath: [['$','$'], ['\\(','\\)']],
-				displayMath: [['$$','$$'], ['\[','\]']],
-				processEscapes: true,
-				processEnvironments: true,
-				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-				TeX: { equationNumbers: { autoNumber: "AMS" },
-						 extensions: ["AMSmath.js", "AMSsymbols.js"] }
-			}
-		});
-		</script>
+		{{ $darkstyle := resources.Get "css/dark.css" | resources.Minify | fingerprint "sha512" }}
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="{{ $darkstyle.Permalink }}" integrity="{{ $darkstyle.Data.Integrity }}" {{ if eq .Site.Params.mode "auto" }}media="(prefers-color-scheme: dark)"{{ end }} {{ if eq .Site.Params.mode "toggle" }}disabled{{ end }} />
 	{{ end }}
 
 	<!-- KaTeX support -->
 	{{ with .Site.Params.katex }}
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">
-		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>
-		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+		{{ $style := resources.Get "katex/katex.css" | resources.Minify | fingerprint "sha512" }}
+		<link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
+		{{ $js := resources.Get "katex/katex.js" | resources.Minify | fingerprint "sha512" }}
+		<script defer src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+		{{ $js := resources.Get "katex/contrib/auto-render.js" | resources.Minify | fingerprint "sha512" }}
+		<script defer src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}" onload="renderMathInElement(document.body);"></script>
 
 		<!-- inline KaTeX -->
-		<script>
-			document.addEventListener("DOMContentLoaded", function() {
-					renderMathInElement(document.body, {
-							delimiters: [
-									{left: "$$", right: "$$", display: true},
-									{left: "$", right: "$", display: false}
-							]
-					});
-			});
-			</script>
+		{{ $js := resources.Get "js/katex.js" | resources.Minify | fingerprint "sha512" }}
+		<script defer src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 	{{ end }}
 
 	<!-- Custom CSS style get applied last -->
 	{{- if isset .Site.Params "customcss" }}
 		{{ range .Site.Params.customCSS }}
-		{{ $customstyle := resources.Get . | fingerprint }}
-		<link rel="stylesheet" type="text/css" href="{{ $customstyle.Permalink }}">
+		{{ $customstyle := resources.Get . | resources.Minify | fingerprint "sha512" }}
+		<link rel="stylesheet" type="text/css" href="{{ $customstyle.Permalink }}" integrity="{{ $js.Data.Integrity }}">
 		{{ end }}
 	{{- end -}}
 	{{- range .Site.Params.customJS }}
 	{{- if or (hasPrefix . "http://") (hasPrefix . "https://") }}
-	<script src="{{ . }}"></script>
+	<script src="{{ . }}" crossorigin="anonymous"></script>
 	{{- else if (hasPrefix . "<script")}}
-    {{ .| safeHTML }}
+	{{ .| safeHTML }}
 	{{- else }}
 	<script src="{{ absURL . }}"></script>
 	{{- end }}

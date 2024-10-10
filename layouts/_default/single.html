@@ -4,17 +4,22 @@
 		{{ if (isset .Params "notitle") }}<br/>{{ else }}
 		<div class="title">
 			<h1 class="title">{{ .Title }}</h1>
-			<div class="meta">Posted on {{ dateFormat ":date_medium" .Date }}{{ if .Draft }} <span class="draft-label">DRAFT</span> {{ end }}</div>
+			<div class="meta">发布于 {{ dateFormat ":date_medium" .Date }}{{ if .Draft }} <span class="draft-label">抢先体验</span> {{ end }}</div>
+		</div>{{ end }}
+		{{ if .Draft }}
+		<div class="draft-label">
+			<strong>这是一个预发布的文章。</strong>
+			文章的内容并没有经过仔细地考量和阅读。如果有任何修改意见，请<a href="/about">联系我</a>。
 		</div>{{ end }}
 		{{ if isset .Params "tldr" }}
 		<div class="tldr">
-			<strong>tl;dr:</strong>
+			<strong>简而言之:</strong>
 			{{ .Params.tldr }}
 		</div>{{ end }}
 
 		{{ if isset .Params "toc" }}
 		<div class="toc">
-		<strong>Table of contents:</strong>
+		<strong>目录:</strong>
 		{{ .TableOfContents }}
 		</div>{{ end }}
 

@@ -10,7 +10,6 @@ Forked from [Ezhil Theme](https://github.com/vividvilla/ezhil)
 ![](/images/theme.png)
 ![](/images/archie-dark.png)
 ## Feature
-- Google Analytics Script
 - Callouts
 - Tags
 - Auto Dark Mode(based on system theme)

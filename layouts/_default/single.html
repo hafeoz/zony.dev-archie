@@ -1,7 +1,7 @@
 {{ define "main" }}
 <main>
 	<article>
-		{{ if not (isset .Params "notitle") }}
+		{{ if (isset .Params "notitle") }}<br/>{{ else }}
 		<div class="title">
 			<h1 class="title">{{ .Title }}</h1>
 			<div class="meta">Posted on {{ dateFormat ":date_medium" .Date }}{{ if .Draft }} <span class="draft-label">DRAFT</span> {{ end }}</div>

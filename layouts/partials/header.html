@@ -53,7 +53,7 @@
 	{{- if isset .Site.Params "customcss" }}
 		{{ range .Site.Params.customCSS }}
 		{{ $customstyle := resources.Get . | resources.Minify | fingerprint "sha512" }}
-		<link rel="stylesheet" type="text/css" href="{{ $customstyle.Permalink }}" integrity="{{ $js.Data.Integrity }}">
+		<link rel="stylesheet" type="text/css" href="{{ $customstyle.Permalink }}" integrity="{{ $customstyle.Data.Integrity }}">
 		{{ end }}
 	{{- end -}}
 	{{- range .Site.Params.customJS }}

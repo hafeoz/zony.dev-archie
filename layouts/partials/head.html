@@ -1,6 +1,6 @@
 <header>
 	<div class="main">
-		<a href="{{ absURL "/" }}">{{ .Site.Title }}</a>
+		<a href="{{ relURL "/" }}">{{ .Site.Title }}</a>
 	</div>
 	<nav>
 		{{ range .Site.Menus.main }}
@@ -9,7 +9,7 @@
 		{{ if eq .Site.Params.mode "toggle" -}}
 		<span id="dark-mode-toggle" onclick="toggleTheme()"></span>
 		{{ $js := resources.Get "js/themetoggle.js" | resources.Minify | fingerprint "sha512" }}
-		<script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+		<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 		{{ end }}
 	</nav>
 </header>

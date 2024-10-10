@@ -7,12 +7,12 @@
 			<div class="meta">发布于 {{ dateFormat ":date_medium" .Date }}{{ if .Draft }} <span class="draft-label">抢先体验</span> {{ end }}</div>
 		</div>{{ end }}
 		{{ if .Draft }}
-		<div class="draft-label">
+		<div class="draft-label heti">
 			<strong>这是一个预发布的文章。</strong>
 			文章的内容并没有经过仔细地考量和阅读。如果有任何修改意见，请<a href="/about">联系我</a>。
 		</div>{{ end }}
 		{{ if isset .Params "tldr" }}
-		<div class="tldr">
+		<div class="tldr heti">
 			<strong>简而言之:</strong>
 			{{ .Params.tldr }}
 		</div>{{ end }}
@@ -23,7 +23,7 @@
 		{{ .TableOfContents }}
 		</div>{{ end }}
 
-		<section class="body">
+		<section class="body heti">
 			{{ .Content }}
 		</section>
 

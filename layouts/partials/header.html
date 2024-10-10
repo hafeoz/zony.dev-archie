@@ -49,6 +49,14 @@
 		<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 	{{ end }}
 
+	<!-- Heti -->
+	{{ $style := resources.Get "css/heti.css" | resources.Minify | fingerprint "sha512" }}
+	<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+	{{ $js := resources.Get "js/heti-addon.js" | resources.Minify | fingerprint "sha512" }}
+	<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+	{{ $js := resources.Get "js/heti-apply.js" | resources.Minify | fingerprint "sha512" }}
+	<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+
 	<!-- Custom CSS style get applied last -->
 	{{- if isset .Site.Params "customcss" }}
 		{{ range .Site.Params.customCSS }}

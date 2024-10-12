@@ -139,6 +139,13 @@ header {
   justify-content: space-between;
   margin: 1em 0;
   line-height: 2.5em;
+  /* https://jp.v2ex.com/t/1079493#r_15373026 */
+  background-color: transparent;
+  background-image: radial-gradient(transparent 1px, #ffffff 1px);
+  background-size: 4px 4px;
+  backdrop-filter: saturate(50%) blur(4px);
+  position: fixed;
+  top: 0;
 }
 
 header .main {
